@@ -23,7 +23,6 @@ jobs:
       - name: Install dependencies and build backend
         run: |
           npm install --prefix backend
-          npm run build --prefix backend
 
       - name: Upload backend artifact
         uses: actions/upload-artifact@v4
@@ -57,3 +56,4 @@ jobs:
           app-name: 'secureapp-backend'
           slot-name: 'Production'
           package: backend-artifact
+
