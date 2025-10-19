@@ -55,4 +55,5 @@ jobs:
         with:
           app-name: 'secureapp-backend'
           slot-name: 'Production'
-          package: backend-artifact
+          package: backend-artifact/backend
+
