@@ -22,8 +22,9 @@ jobs:
 
       - name: Install dependencies and build React
         run: |
-          npm install --prefix frontend
-          npm run build --prefix frontend
+              cd frontend
+              npm install
+              npm run build
 
       - name: Upload artifact for deployment
         uses: actions/upload-artifact@v4
@@ -57,3 +58,4 @@ jobs:
           app-name: 'secureapp-frontend'
           slot-name: 'Production'
           package: react-build
+
