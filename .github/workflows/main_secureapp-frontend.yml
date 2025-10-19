@@ -22,9 +22,9 @@ jobs:
 
       - name: Install dependencies and build React
         run: |
-              cd frontend
-              npm install
-              npm run build
+          cd frontend
+          npm install
+          npm run build
 
       - name: Upload artifact for deployment
         uses: actions/upload-artifact@v4
@@ -44,6 +44,7 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: react-build
+          path: ./artifact
 
       - name: Login to Azure
         uses: azure/login@v2
@@ -57,5 +58,4 @@ jobs:
         with:
           app-name: 'secureapp-frontend'
           slot-name: 'Production'
-          package: react-build
-
+          package: ./artifact
