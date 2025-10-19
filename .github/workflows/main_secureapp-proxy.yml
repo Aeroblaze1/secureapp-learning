@@ -26,12 +26,11 @@ jobs:
       - name: npm install and build
         run: |
           npm install --prefix proxy
-          npm run build --prefix proxy --if-present
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
         with:
-          name: node-app
+          name: proxy-app
           path: proxy
 
   deploy:
@@ -59,4 +58,5 @@ jobs:
         with:
           app-name: 'secureapp-proxy'
           slot-name: 'Production'
-          package: node-app  # <-- deploy artifact folder
+          package: proxy  # <-- deploy artifact folder
+
