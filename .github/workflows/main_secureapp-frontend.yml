@@ -15,22 +15,21 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Set up Node.js version
+      - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
           node-version: '20.x'
 
-      - name: npm install and build frontend
+      - name: Install dependencies and build React
         run: |
-          cd frontend         # <-- move into frontend folder
-          npm install
-          npm run build       # build React app
+          npm install --prefix frontend
+          npm run build --prefix frontend
 
-      - name: Upload artifact for deployment job
+      - name: Upload artifact for deployment
         uses: actions/upload-artifact@v4
         with:
-          name: react-app
-          path: frontend/build    # <-- upload only build folder
+          name: react-build
+          path: frontend/build
 
   deploy:
     runs-on: ubuntu-latest
@@ -40,10 +39,10 @@ jobs:
       contents: read
 
     steps:
-      - name: Download artifact from build job
+      - name: Download artifact
         uses: actions/download-artifact@v4
         with:
-          name: react-app
+          name: react-build
 
       - name: Login to Azure
         uses: azure/login@v2
@@ -52,9 +51,9 @@ jobs:
           tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_F6D659BBDA3B4AE88979ED57748F65F5 }}
           subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_440A64C55790419E85E8C6C927DD1B21 }}
 
-      - name: Deploy React build to Azure Web App
+      - name: Deploy to Azure Web App
         uses: azure/webapps-deploy@v3
         with:
           app-name: 'secureapp-frontend'
           slot-name: 'Production'
-          package: frontend/build   # <-- deploy only build folder
+          package: react-build
